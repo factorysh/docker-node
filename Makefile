@@ -14,3 +14,5 @@ pull:
 push:
 	docker push bearstech/node:6
 	docker push bearstech/node:lts
+	docker push bearstech/node-dev:lts
+	docker push bearstech/node-dev:6
