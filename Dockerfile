@@ -2,6 +2,7 @@ FROM bearstech/debian:stretch
 
 RUN apt-get update && apt-get -y install \
         apt-transport-https \
+	ca-certificates \
         curl \
         && \
         curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -a && \
