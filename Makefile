@@ -4,6 +4,9 @@ node:
 	docker build -t bearstech/node:6 .
 	docker tag bearstech/node:6 bearstech/node:lts
 
+node8:
+	docker build -t bearstech/node:8 -f Dockerfile.8 .
+
 node-dev:
 	docker build -t bearstech/node-dev:6 -f Dockerfile.dev .
 	docker tag bearstech/node-dev:6 bearstech/node-dev:lts
