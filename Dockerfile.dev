@@ -1,4 +1,8 @@
-FROM bearstech/node:6
+ARG NODE_MAJOR_VERSION
+FROM bearstech/node:${NODE_MAJOR_VERSION}
+
+ARG YARN_VERSION
+LABEL com.bearstech.version.yarn=${YARN_VERSION}
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo 'deb https://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list

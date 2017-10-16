@@ -2,6 +2,7 @@ all: node node-dev
 
 NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE8_VERSION = $(shell curl -qs https://deb.nodesource.com/node_8.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
+YARN_VERSION = $(shell curl -qs http://dl.yarnpkg.com/debian/dists/stable/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 
 node:
 	docker build \
@@ -17,8 +18,17 @@ node8:
 		-t bearstech/node:8 .
 
 node-dev:
-	docker build -t bearstech/node-dev:6 -f Dockerfile.dev .
+	docker build -t bearstech/node-dev:6 \
+		--build-arg NODE_MAJOR_VERSION=6 \
+		--build-arg YARN_VERSION=${YARN_VERSION} \
+		-f Dockerfile.dev .
 	docker tag bearstech/node-dev:6 bearstech/node-dev:lts
+
+node8-dev:
+	docker build -t bearstech/node-dev:8 \
+		--build-arg NODE_MAJOR_VERSION=8 \
+		--build-arg YARN_VERSION=${YARN_VERSION} \
+		-f Dockerfile.dev .
 
 pull:
 	docker pull bearstech/debian:stretch
