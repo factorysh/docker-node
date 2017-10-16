@@ -1,11 +1,20 @@
 all: node node-dev
 
+NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
+NODE8_VERSION = $(shell curl -qs https://deb.nodesource.com/node_8.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
+
 node:
-	docker build -t bearstech/node:6 .
+	docker build \
+		--build-arg NODE_VERSION=${NODE6_VERSION} \
+		--build-arg NODE_MAJOR_VERSION=6 \
+		-t bearstech/node:6 .
 	docker tag bearstech/node:6 bearstech/node:lts
 
 node8:
-	docker build -t bearstech/node:8 -f Dockerfile.8 .
+	docker build \
+		--build-arg NODE_VERSION=${NODE8_VERSION} \
+		--build-arg NODE_MAJOR_VERSION=8 \
+		-t bearstech/node:8 .
 
 node-dev:
 	docker build -t bearstech/node-dev:6 -f Dockerfile.dev .
