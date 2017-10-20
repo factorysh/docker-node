@@ -11,5 +11,7 @@ RUN apt-get update && apt-get install -y \
         python2.7 \
         make \
         build-essential \
+        git \
+        mercurial \
     && rm -rf /var/lib/apt/lists/*
 RUN npm install -g node-gyp
