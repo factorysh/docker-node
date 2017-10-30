@@ -38,3 +38,5 @@ push:
 	docker push bearstech/node:lts
 	docker push bearstech/node-dev:lts
 	docker push bearstech/node-dev:6
+	docker push bearstech/node:8
+	docker push bearstech/node-dev:8
