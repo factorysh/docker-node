@@ -1,8 +1,21 @@
-all: node node-dev node8 node8-dev
+all: 
 
 NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE8_VERSION = $(shell curl -qs https://deb.nodesource.com/node_8.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 YARN_VERSION = $(shell curl -qs http://dl.yarnpkg.com/debian/dists/stable/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
+
+pull:
+	docker pull bearstech/debian:stretch
+
+build: node node-dev node8 node8-dev
+
+push:
+	docker push bearstech/node:6
+	docker push bearstech/node:lts
+	docker push bearstech/node-dev:lts
+	docker push bearstech/node-dev:6
+	docker push bearstech/node:8
+	docker push bearstech/node-dev:8
 
 node:
 	docker build \
@@ -30,13 +43,5 @@ node8-dev:
 		--build-arg YARN_VERSION=${YARN_VERSION} \
 		-f Dockerfile.dev .
 
-pull:
-	docker pull bearstech/debian:stretch
-
-push:
-	docker push bearstech/node:6
-	docker push bearstech/node:lts
-	docker push bearstech/node-dev:lts
-	docker push bearstech/node-dev:6
-	docker push bearstech/node:8
-	docker push bearstech/node-dev:8
+tests:
+	echo "No tests provided for docker-node..."
