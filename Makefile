@@ -3,6 +3,7 @@ all:
 NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE8_VERSION = $(shell curl -qs https://deb.nodesource.com/node_8.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 YARN_VERSION = $(shell curl -qs http://dl.yarnpkg.com/debian/dists/stable/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
+GOSS_VERSION := 0.3.5
 
 pull:
 	docker pull bearstech/debian:stretch
@@ -43,5 +44,27 @@ node8-dev:
 		--build-arg YARN_VERSION=${YARN_VERSION} \
 		-f Dockerfile.dev .
 
-tests:
-	echo "No tests provided for docker-node..."
+bin/goss:
+	mkdir -p bin
+	curl -o bin/goss -L https://github.com/aelsabbahy/goss/releases/download/v${GOSS_VERSION}/goss-linux-amd64
+	chmod +x bin/goss
+
+test-6: bin/goss
+	@rm -rf tests/vendor
+	@docker run --rm -t \
+		-v `pwd`/bin/goss:/usr/local/bin/goss \
+		-v `pwd`/tests:/goss \
+		-w /goss \
+		bearstech/node-dev:6 \
+		goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation
+
+test-8: bin/goss
+	@rm -rf tests/vendor
+	@docker run --rm -t \
+		-v `pwd`/bin/goss:/usr/local/bin/goss \
+		-v `pwd`/tests:/goss \
+		-w /goss \
+		bearstech/node-dev:8 \
+		goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation
+
+tests: test-6 test-8

@@ -1,0 +1,8 @@
+---
+
+command:
+    "bash node_install.sh":
+        exit-status: 0
+        timeout: 120000
+        stdout:
+            - "/.*Hello World!.*/"

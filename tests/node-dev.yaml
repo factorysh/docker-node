@@ -1,0 +1,5 @@
+---
+
+gossfile:
+    node_version.yaml: {}
+    node_install.yaml: {}
