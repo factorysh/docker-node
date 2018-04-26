@@ -50,21 +50,19 @@ bin/goss:
 	chmod +x bin/goss
 
 test-6: bin/goss
-	@rm -rf tests/vendor
-	@docker run --rm -t \
-		-v `pwd`/bin/goss:/usr/local/bin/goss \
-		-v `pwd`/tests:/goss \
-		-w /goss \
-		bearstech/node-dev:6 \
-		goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation
+	@docker run -d -t --name node-test bearstech/node-dev:6 > /dev/null
+	@docker cp tests node-test:/goss
+	@docker cp bin/goss node-test:/usr/local/bin/goss
+	@docker exec -w /goss node-test goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation
+	@docker stop node-test > /dev/null
+	@docker rm node-test > /dev/null
 
 test-8: bin/goss
-	@rm -rf tests/vendor
-	@docker run --rm -t \
-		-v `pwd`/bin/goss:/usr/local/bin/goss \
-		-v `pwd`/tests:/goss \
-		-w /goss \
-		bearstech/node-dev:8 \
-		goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation
+	@docker run -d -t --name node-test bearstech/node-dev:8 > /dev/null
+	@docker cp tests node-test:/goss
+	@docker cp bin/goss node-test:/usr/local/bin/goss
+	@docker exec -w /goss node-test goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation
+	@docker stop node-test > /dev/null
+	@docker rm node-test > /dev/null
 
 tests: test-6 test-8

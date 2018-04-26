@@ -1,8 +1,8 @@
 ---
 
 command:
-    "bash node_install.sh":
+    "node hello.js":
         exit-status: 0
         timeout: 120000
         stdout:
-            - "/.*Hello World!.*/"
+            - "/Hello World!/"

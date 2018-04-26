@@ -1,0 +1,7 @@
+---
+
+command:
+    "cd yarn; yarn add markdown-it; node main.js":
+        exit-status: 0
+        stdout:
+            - /<p>Hello <em>World</em>!</p>/

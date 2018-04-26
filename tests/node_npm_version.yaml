@@ -1,0 +1,7 @@
+---
+
+command:
+    "npm --version":
+        exit-status: 0
+        stdout:
+            - /{{ .Vars.npm_version }}/

@@ -2,4 +2,8 @@
 
 gossfile:
     node_version.yaml: {}
-    node_install.yaml: {}
+    node_hello.yaml: {}
+    node_npm_version.yaml: {}
+    node_npm.yaml: {}
+    node_yarn_version.yaml: {}
+    node_yarn.yaml: {}
