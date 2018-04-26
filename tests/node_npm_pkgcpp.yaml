@@ -1,0 +1,8 @@
+---
+
+command:
+    "cd npm_pkgcpp && bash ./setup.sh":
+        exit-status: 0
+        timeout: 300000
+        stdout:
+            - /UTF-8/

@@ -5,5 +5,7 @@ gossfile:
     node_hello.yaml: {}
     node_npm_version.yaml: {}
     node_npm.yaml: {}
+    node_npm_pkgcpp.yaml: {}
     node_yarn_version.yaml: {}
     node_yarn.yaml: {}
+    node_yarn_pkgcpp.yaml: {}

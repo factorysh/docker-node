@@ -53,7 +53,7 @@ test-6: bin/goss
 	@docker run -d -t --name node-test bearstech/node-dev:6 > /dev/null
 	@docker cp tests node-test:/goss
 	@docker cp bin/goss node-test:/usr/local/bin/goss
-	@docker exec -w /goss node-test goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation
+	@docker exec -w /goss node-test goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 1 --format documentation
 	@docker stop node-test > /dev/null
 	@docker rm node-test > /dev/null
 
@@ -61,7 +61,7 @@ test-8: bin/goss
 	@docker run -d -t --name node-test bearstech/node-dev:8 > /dev/null
 	@docker cp tests node-test:/goss
 	@docker cp bin/goss node-test:/usr/local/bin/goss
-	@docker exec -w /goss node-test goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation
+	@docker exec -w /goss node-test goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 1 --format documentation
 	@docker stop node-test > /dev/null
 	@docker rm node-test > /dev/null
 
