@@ -1,0 +1,7 @@
+---
+
+gossfile:
+    node_version.yaml: {}
+    node_npm_version.yaml: {}
+    node_npm.yaml: {}
+    node_npm_pkgcpp.yaml: {}

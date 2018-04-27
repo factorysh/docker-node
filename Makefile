@@ -49,20 +49,47 @@ bin/goss:
 	curl -o bin/goss -L https://github.com/aelsabbahy/goss/releases/download/v${GOSS_VERSION}/goss-linux-amd64
 	chmod +x bin/goss
 
+NAME_CONTAINER := ""
+CMD_CONTAINER := ""
+IMG_CONTAINER := ""
+
+test-deployed:
+	@test "${NAME_CONTAINER}" || (echo "you cannot call this rule..." && exit 1)
+	@test "${CMD_CONTAINER}" || (echo "you cannot call this rule..." && exit 1)
+	@test "${IMG_CONTAINER}" || (echo "you cannot call this rule..." && exit 1)
+	@docker run -d -t --name ${NAME_CONTAINER} ${IMG_CONTAINER} > /dev/null
+	@docker cp tests/. ${NAME_CONTAINER}:/go
+	@docker cp bin/goss ${NAME_CONTAINER}:/usr/local/bin/goss
+	@docker exec -t -w /go ${NAME_CONTAINER} ${CMD_CONTAINER}
+	@docker stop ${NAME_CONTAINER} > /dev/null
+	@docker rm ${NAME_CONTAINER} > /dev/null
+
 test-6: bin/goss
-	@docker run -d -t --name $@ bearstech/node-dev:6 > /dev/null
-	@docker cp tests $@:/goss
-	@docker cp bin/goss $@:/usr/local/bin/goss
-	@docker exec -t -w /goss $@ goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 1 --format documentation
-	@docker stop $@ > /dev/null
-	@docker rm $@ > /dev/null
+	@make -s -C . test-deployed \
+			NAME_CONTAINER="$@" \
+			IMG_CONTAINER="bearstech/node-dev:6" \
+			CMD_CONTAINER="goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation"
+	@make -s -C . test-deployed \
+			NAME_CONTAINER="$@" \
+			IMG_CONTAINER="bearstech/node-dev:6" \
+			CMD_CONTAINER="goss -g node-dev-npm.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation"
+	@make -s -C . test-deployed \
+			NAME_CONTAINER="$@" \
+			IMG_CONTAINER="bearstech/node-dev:6" \
+			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation"
 
 test-8: bin/goss
-	@docker run -d -t --name $@ bearstech/node-dev:8 > /dev/null
-	@docker cp tests $@:/goss
-	@docker cp bin/goss $@:/usr/local/bin/goss
-	@docker exec -t -w /goss $@ goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 1 --format documentation
-	@docker stop $@ > /dev/null
-	@docker rm $@ > /dev/null
+	@make -s -C . test-deployed \
+			NAME_CONTAINER="$@" \
+			IMG_CONTAINER="bearstech/node-dev:8" \
+			CMD_CONTAINER="goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
+	@make -s -C . test-deployed \
+			NAME_CONTAINER="$@" \
+			IMG_CONTAINER="bearstech/node-dev:8" \
+			CMD_CONTAINER="goss -g node-dev-npm.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
+	@make -s -C . test-deployed \
+			NAME_CONTAINER="$@" \
+			IMG_CONTAINER="bearstech/node-dev:8" \
+			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
 
 tests: test-6 test-8

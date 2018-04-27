@@ -1,0 +1,7 @@
+---
+
+gossfile:
+    node_version.yaml: {}
+    node_yarn_version.yaml: {}
+    node_yarn.yaml: {}
+    node_yarn_pkgcpp.yaml: {}
