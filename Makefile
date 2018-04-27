@@ -50,19 +50,19 @@ bin/goss:
 	chmod +x bin/goss
 
 test-6: bin/goss
-	@docker run -d -t --name node-test bearstech/node-dev:6 > /dev/null
-	@docker cp tests node-test:/goss
-	@docker cp bin/goss node-test:/usr/local/bin/goss
-	@docker exec -t -w /goss node-test goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 1 --format documentation
-	@docker stop node-test > /dev/null
-	@docker rm node-test > /dev/null
+	@docker run -d -t --name $@ bearstech/node-dev:6 > /dev/null
+	@docker cp tests $@:/goss
+	@docker cp bin/goss $@:/usr/local/bin/goss
+	@docker exec -t -w /goss $@ goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 1 --format documentation
+	@docker stop $@ > /dev/null
+	@docker rm $@ > /dev/null
 
 test-8: bin/goss
-	@docker run -d -t --name node-test bearstech/node-dev:8 > /dev/null
-	@docker cp tests node-test:/goss
-	@docker cp bin/goss node-test:/usr/local/bin/goss
-	@docker exec -t -w /goss node-test goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 1 --format documentation
-	@docker stop node-test > /dev/null
-	@docker rm node-test > /dev/null
+	@docker run -d -t --name $@ bearstech/node-dev:8 > /dev/null
+	@docker cp tests $@:/goss
+	@docker cp bin/goss $@:/usr/local/bin/goss
+	@docker exec -t -w /goss $@ goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 1 --format documentation
+	@docker stop $@ > /dev/null
+	@docker rm $@ > /dev/null
 
 tests: test-6 test-8
