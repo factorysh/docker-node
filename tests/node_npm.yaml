@@ -3,5 +3,6 @@
 command:
     "cd npm_standard; npm install markdown; node main.js":
         exit-status: 0
+        timeout: 300000
         stdout:
             - /<p>Hello <em>World</em>!</p>/

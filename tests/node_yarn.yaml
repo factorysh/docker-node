@@ -3,5 +3,6 @@
 command:
     "cd yarn_standard; yarn add markdown-it; node main.js":
         exit-status: 0
+        timeout: 300000
         stdout:
             - /<p>Hello <em>World</em>!</p>/
