@@ -6,7 +6,7 @@ ARG NODE_MAJOR_VERSION
 
 RUN apt-get update && apt-get -y install \
         apt-transport-https \
-	ca-certificates \
+        ca-certificates \
         curl
 
 RUN curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -a && \

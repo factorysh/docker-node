@@ -1,24 +1,27 @@
-all: 
+all:
 
 NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE8_VERSION = $(shell curl -qs https://deb.nodesource.com/node_8.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
+NODE10_VERSION = $(shell curl -qs https://deb.nodesource.com/node_10.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 YARN_VERSION = $(shell curl -qs http://dl.yarnpkg.com/debian/dists/stable/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 GOSS_VERSION := 0.3.5
 
 pull:
 	docker pull bearstech/debian:stretch
 
-build: node node-dev node8 node8-dev
+build: node6 node6-dev node8 node8-dev node10 node10-dev
 
 push:
 	docker push bearstech/node:6
 	docker push bearstech/node:lts
-	docker push bearstech/node-dev:lts
 	docker push bearstech/node-dev:6
+	docker push bearstech/node-dev:lts
 	docker push bearstech/node:8
 	docker push bearstech/node-dev:8
+	docker push bearstech/node:10
+	docker push bearstech/node-dev:10
 
-node:
+node6:
 	docker build \
 		--build-arg NODE_VERSION=${NODE6_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=6 \
@@ -31,7 +34,13 @@ node8:
 		--build-arg NODE_MAJOR_VERSION=8 \
 		-t bearstech/node:8 .
 
-node-dev:
+node10:
+	docker build \
+		--build-arg NODE_VERSION=${NODE10_VERSION} \
+		--build-arg NODE_MAJOR_VERSION=10 \
+		-t bearstech/node:10 .
+
+node6-dev:
 	docker build -t bearstech/node-dev:6 \
 		--build-arg NODE_MAJOR_VERSION=6 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
@@ -41,6 +50,12 @@ node-dev:
 node8-dev:
 	docker build -t bearstech/node-dev:8 \
 		--build-arg NODE_MAJOR_VERSION=8 \
+		--build-arg YARN_VERSION=${YARN_VERSION} \
+		-f Dockerfile.dev .
+
+node10-dev:
+	docker build -t bearstech/node-dev:10 \
+		--build-arg NODE_MAJOR_VERSION=10 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
 		-f Dockerfile.dev .
 
@@ -93,4 +108,18 @@ test-8: bin/goss
 			IMG_CONTAINER="bearstech/node-dev:8" \
 			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
 
-tests: test-6 test-8
+test-10: bin/goss
+	@make -s -C . test-deployed \
+			NAME_CONTAINER="$@" \
+			IMG_CONTAINER="bearstech/node-dev:10" \
+			CMD_CONTAINER="goss -g node-dev.yaml --vars vars/10.yaml validate --max-concurrent 4 --format documentation"
+	@make -s -C . test-deployed \
+			NAME_CONTAINER="$@" \
+			IMG_CONTAINER="bearstech/node-dev:10" \
+			CMD_CONTAINER="goss -g node-dev-npm.yaml --vars vars/10.yaml validate --max-concurrent 4 --format documentation"
+	@make -s -C . test-deployed \
+			NAME_CONTAINER="$@" \
+			IMG_CONTAINER="bearstech/node-dev:10" \
+			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/10.yaml validate --max-concurrent 4 --format documentation"
+
+tests: test-6 test-8 test-10
