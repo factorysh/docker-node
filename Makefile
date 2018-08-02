@@ -10,7 +10,10 @@ all: pull build
 pull:
 	docker pull bearstech/debian:stretch
 
-build: node6 node6-dev node8 node8-dev node10 node10-dev
+build: \
+			node6 node6-dev \
+			node8 node8-dev \
+			node10 node10-dev
 
 push:
 	docker push bearstech/node:6
