@@ -25,6 +25,16 @@ push:
 	docker push bearstech/node:10
 	docker push bearstech/node-dev:10
 
+remove_image:
+	docker rmi bearstech/node:6
+	docker rmi bearstech/node:lts
+	docker rmi bearstech/node-dev:6
+	docker rmi bearstech/node-dev:lts
+	docker rmi bearstech/node:8
+	docker rmi bearstech/node-dev:8
+	docker rmi bearstech/node:10
+	docker rmi bearstech/node-dev:10
+
 node6:
 	docker build \
 		--build-arg NODE_VERSION=${NODE6_VERSION} \
