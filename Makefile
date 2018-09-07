@@ -95,43 +95,43 @@ test-deployed:
 	@docker rm ${NAME_CONTAINER} > /dev/null
 
 test-6: bin/goss
-	@make -s -C . test-deployed \
+	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
 			IMG_CONTAINER="bearstech/node-dev:6" \
 			CMD_CONTAINER="goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation"
-	@make -s -C . test-deployed \
+	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
 			IMG_CONTAINER="bearstech/node-dev:6" \
 			CMD_CONTAINER="goss -g node-dev-npm.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation"
-	@make -s -C . test-deployed \
+	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
 			IMG_CONTAINER="bearstech/node-dev:6" \
 			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation"
 
 test-8: bin/goss
-	@make -s -C . test-deployed \
+	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
 			IMG_CONTAINER="bearstech/node-dev:8" \
 			CMD_CONTAINER="goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
-	@make -s -C . test-deployed \
+	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
 			IMG_CONTAINER="bearstech/node-dev:8" \
 			CMD_CONTAINER="goss -g node-dev-npm.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
-	@make -s -C . test-deployed \
+	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
 			IMG_CONTAINER="bearstech/node-dev:8" \
 			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
 
 test-10: bin/goss
-	@make -s -C . test-deployed \
+	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
 			IMG_CONTAINER="bearstech/node-dev:10" \
 			CMD_CONTAINER="goss -g node-dev.yaml --vars vars/10.yaml validate --max-concurrent 4 --format documentation"
-	@make -s -C . test-deployed \
+	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
 			IMG_CONTAINER="bearstech/node-dev:10" \
 			CMD_CONTAINER="goss -g node-dev-npm.yaml --vars vars/10.yaml validate --max-concurrent 4 --format documentation"
-	@make -s -C . test-deployed \
+	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
 			IMG_CONTAINER="bearstech/node-dev:10" \
 			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/10.yaml validate --max-concurrent 4 --format documentation"
