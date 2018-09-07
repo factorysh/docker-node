@@ -4,4 +4,4 @@ command:
     "node --version 2>&1":
         exit-status: 0
         stdout:
-            - /v{{ .Vars.node_version }}.*/
+            - /v{{ .Vars.node_version }}\..*/
