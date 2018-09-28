@@ -5,7 +5,7 @@ NODE10_VERSION = $(shell curl -qs https://deb.nodesource.com/node_10.x/dists/str
 YARN_VERSION = $(shell curl -qs http://dl.yarnpkg.com/debian/dists/stable/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 GOSS_VERSION := 0.3.5
 
-all: pull build
+all: | pull build tests
 
 pull:
 	docker pull bearstech/debian:stretch
