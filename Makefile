@@ -3,7 +3,7 @@ NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stret
 NODE8_VERSION = $(shell curl -qs https://deb.nodesource.com/node_8.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE10_VERSION = $(shell curl -qs https://deb.nodesource.com/node_10.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 YARN_VERSION = $(shell curl -qs http://dl.yarnpkg.com/debian/dists/stable/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
-GOSS_VERSION := 0.3.5
+GOSS_VERSION := 0.3.6
 
 all: | pull build tests
 
