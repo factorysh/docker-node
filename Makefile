@@ -136,4 +136,6 @@ test-10: bin/goss
 			IMG_CONTAINER="bearstech/node-dev:10" \
 			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/10.yaml validate --max-concurrent 4 --format documentation"
 
+down:
+
 tests: test-6 test-8 test-10
