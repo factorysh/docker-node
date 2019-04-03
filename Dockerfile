@@ -13,8 +13,8 @@ RUN set -eux \
               ca-certificates \
               curl \
     &&  curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -a \
-    &&  echo "deb https://deb.nodesource.com/node_${NODE_MAJOR_VERSION}.x stretch main" | tee /etc/apt/sources.list.d/nodesource.list \
-    &&  echo "deb-src https://deb.nodesource.com/node_${NODE_MAJOR_VERSION}.x stretch main" | tee -a /etc/apt/sources.list.d/nodesource.list \
+    &&  echo "deb https://deb.nodesource.com/node_${NODE_MAJOR_VERSION}.x stretch main" > /etc/apt/sources.list.d/nodesource.list \
+    &&  echo "deb-src https://deb.nodesource.com/node_${NODE_MAJOR_VERSION}.x stretch main" >>  /etc/apt/sources.list.d/nodesource.list \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
               nodejs \
