@@ -22,3 +22,6 @@ RUN set -eux \
     &&  rm -rf /var/lib/apt/lists/*
 
 SHELL ["/bin/sh", "-c"]
+ARG GIT_VERSION
+LABEL com.bearstech.source.node=https://github.com/factorysh/docker-node/commit/${GIT_VERSION}
+
