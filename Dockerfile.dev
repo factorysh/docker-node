@@ -29,3 +29,5 @@ RUN set -eux \
     &&  npm install -g node-gyp
 
 SHELL ["/bin/sh", "-c"]
+ARG GIT_VERSION
+LABEL com.bearstech.source.node=https://github.com/factorysh/docker-node/commit/${GIT_VERSION}
