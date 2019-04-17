@@ -25,3 +25,6 @@ SHELL ["/bin/sh", "-c"]
 ARG GIT_VERSION
 LABEL com.bearstech.source.node=https://github.com/factorysh/docker-node/commit/${GIT_VERSION}
 
+ARG GIT_DATE
+LABEL com.bearstech.date.node=${GIT_DATE}
+
