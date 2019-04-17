@@ -5,6 +5,7 @@ NODE10_VERSION = $(shell curl -qs https://deb.nodesource.com/node_10.x/dists/str
 YARN_VERSION = $(shell curl -qs http://dl.yarnpkg.com/debian/dists/stable/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 GOSS_VERSION := 0.3.6
 GIT_VERSION := $(shell git rev-parse HEAD)
+GIT_DATE := $(shell git show -s --format=%ci HEAD)
 
 all: | pull build tests
 
@@ -41,6 +42,7 @@ node6:
 		--build-arg NODE_VERSION=${NODE6_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=6 \
 		--build-arg GIT_VERSION=${GIT_VERSION} \
+		--build-arg GIT_DATE="${GIT_DATE}" \
 		-t bearstech/node:6 .
 	docker tag bearstech/node:6 bearstech/node:lts
 
@@ -49,6 +51,7 @@ node8:
 		--build-arg NODE_VERSION=${NODE8_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=8 \
 		--build-arg GIT_VERSION=${GIT_VERSION} \
+		--build-arg GIT_DATE="${GIT_DATE}" \
 		-t bearstech/node:8 .
 
 node10:
@@ -56,6 +59,7 @@ node10:
 		--build-arg NODE_VERSION=${NODE10_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=10 \
 		--build-arg GIT_VERSION=${GIT_VERSION} \
+		--build-arg GIT_DATE="${GIT_DATE}" \
 		-t bearstech/node:10 .
 
 node6-dev:
@@ -72,6 +76,7 @@ node8-dev:
 		--build-arg NODE_MAJOR_VERSION=8 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
 		--build-arg GIT_VERSION=${GIT_VERSION} \
+		--build-arg GIT_DATE="${GIT_DATE}" \
 		-f Dockerfile.dev .
 
 node10-dev:
@@ -80,6 +85,7 @@ node10-dev:
 		--build-arg NODE_MAJOR_VERSION=10 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
 		--build-arg GIT_VERSION=${GIT_VERSION} \
+		--build-arg GIT_DATE="${GIT_DATE}" \
 		-f Dockerfile.dev .
 
 bin/goss:
