@@ -5,4 +5,4 @@ command:
         exit-status: 0
         timeout: 300000
         stdout:
-            - /UTF-8/
+            - "/1: Yo/"
