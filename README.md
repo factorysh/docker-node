@@ -6,7 +6,7 @@ Node docker images by bearstech
 - [bearstech/node-dev](https://hub.docker.com/r/bearstech/node-dev/)
 - [bearstech/node](https://hub.docker.com/r/bearstech/node/)
 
-All variants are available as tag for Node 6 8 10
+All variants are available as tag for Node 6 8 10 12
 
 Dockerfiles
 -----------
@@ -17,6 +17,6 @@ Usage
 -----
 
 ```
-docker run --rm bearstech/node:10
-docker run --rm bearstech/node-dev:10
+docker run --rm bearstech/node:12
+docker run --rm bearstech/node-dev:12
 ```
