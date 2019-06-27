@@ -1,7 +1,16 @@
-var charsetDetector = require("node-icu-charset-detector");
-var fs = require("fs");
-
-var buffer = fs.readFileSync("UTF-8.txt");
-var charset = charsetDetector.detectCharset(buffer);
-
-console.log(charset.toString());
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database(':memory:');
+ 
+db.serialize(function() {
+  db.run("CREATE TABLE lorem (info TEXT)");
+ 
+  var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
+  stmt.run("Yo");
+  stmt.finalize();
+ 
+  db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
+      console.log(row.id + ": " + row.info);
+  });
+});
+ 
+db.close();
