@@ -4,4 +4,4 @@ command:
     "yarn --version":
         exit-status: 0
         stdout:
-            - /1\.16\..*/
+            - /1\.17\..*/
