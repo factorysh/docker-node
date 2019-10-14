@@ -22,9 +22,19 @@ RUN set -eux \
     &&  rm -rf /var/lib/apt/lists/*
 
 SHELL ["/bin/sh", "-c"]
+
+# generated labels
+
 ARG GIT_VERSION
-LABEL com.bearstech.source.node=https://github.com/factorysh/docker-node/commit/${GIT_VERSION}
-
 ARG GIT_DATE
-LABEL com.bearstech.date.node=${GIT_DATE}
+ARG BUILD_DATE
 
+LABEL com.bearstech.image.revision_date=${GIT_DATE}
+
+LABEL org.opencontainers.image.authors=Bearstech
+
+LABEL org.opencontainers.image.revision=${GIT_VERSION}
+LABEL org.opencontainers.image.created=${BUILD_DATE}
+
+LABEL org.opencontainers.image.url=https://github.com/factorysh/docker-node
+LABEL org.opencontainers.image.source=https://github.com/factorysh/docker-node/blob/${GIT_VERSION}/Dockerfile
