@@ -1,12 +1,12 @@
 
+include Makefile.build_args
+
 NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE8_VERSION = $(shell curl -qs https://deb.nodesource.com/node_8.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE10_VERSION = $(shell curl -qs https://deb.nodesource.com/node_10.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE12_VERSION = $(shell curl -qs https://deb.nodesource.com/node_12.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 YARN_VERSION = $(shell curl -qs http://dl.yarnpkg.com/debian/dists/stable/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 GOSS_VERSION := 0.3.6
-GIT_VERSION := $(shell git rev-parse HEAD)
-GIT_DATE := $(shell git show -s --format=%ci HEAD)
 
 all: | pull build tests
 
@@ -44,40 +44,38 @@ remove_image:
 	docker rmi bearstech/node-dev:12
 
 node6:
-	docker build \
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
 		--build-arg NODE_VERSION=${NODE6_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=6 \
-		--build-arg GIT_VERSION=${GIT_VERSION} \
-		--build-arg GIT_DATE="${GIT_DATE}" \
 		-t bearstech/node:6 .
 	docker tag bearstech/node:6 bearstech/node:lts
 
 node8:
-	docker build \
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
 		--build-arg NODE_VERSION=${NODE8_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=8 \
-		--build-arg GIT_VERSION=${GIT_VERSION} \
-		--build-arg GIT_DATE="${GIT_DATE}" \
 		-t bearstech/node:8 .
 
 node10:
-	docker build \
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
 		--build-arg NODE_VERSION=${NODE10_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=10 \
-		--build-arg GIT_VERSION=${GIT_VERSION} \
-		--build-arg GIT_DATE="${GIT_DATE}" \
 		-t bearstech/node:10 .
 
 node12:
-	docker build \
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
 		--build-arg NODE_VERSION=${NODE12_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=12 \
-		--build-arg GIT_VERSION=${GIT_VERSION} \
-		--build-arg GIT_DATE="${GIT_DATE}" \
 		-t bearstech/node:12 .
 
 node6-dev:
-	docker build -t bearstech/node-dev:6 \
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
+		-t bearstech/node-dev:6 \
 		--build-arg NODE_VERSION=${NODE6_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=6 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
@@ -85,30 +83,30 @@ node6-dev:
 	docker tag bearstech/node-dev:6 bearstech/node-dev:lts
 
 node8-dev:
-	docker build -t bearstech/node-dev:8 \
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
+		-t bearstech/node-dev:8 \
 		--build-arg NODE_VERSION=${NODE8_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=8 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
-		--build-arg GIT_VERSION=${GIT_VERSION} \
-		--build-arg GIT_DATE="${GIT_DATE}" \
 		-f Dockerfile.dev .
 
 node10-dev:
-	docker build -t bearstech/node-dev:10 \
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
+		-t bearstech/node-dev:10 \
 		--build-arg NODE_VERSION=${NODE10_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=10 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
-		--build-arg GIT_VERSION=${GIT_VERSION} \
-		--build-arg GIT_DATE="${GIT_DATE}" \
 		-f Dockerfile.dev .
 
 node12-dev:
-	docker build -t bearstech/node-dev:12 \
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
+		-t bearstech/node-dev:12 \
 		--build-arg NODE_VERSION=${NODE12_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=12 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
-		--build-arg GIT_VERSION=${GIT_VERSION} \
-		--build-arg GIT_DATE="${GIT_DATE}" \
 		-f Dockerfile.dev .
 
 bin/goss:
