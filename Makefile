@@ -21,27 +21,27 @@ build: \
 
 push:
 	docker push bearstech/node:6
-	docker push bearstech/node:lts
 	docker push bearstech/node-dev:6
-	docker push bearstech/node-dev:lts
 	docker push bearstech/node:8
 	docker push bearstech/node-dev:8
 	docker push bearstech/node:10
 	docker push bearstech/node-dev:10
 	docker push bearstech/node:12
 	docker push bearstech/node-dev:12
+	docker push bearstech/node:lts
+	docker push bearstech/node-dev:lts
 
 remove_image:
 	docker rmi bearstech/node:6
-	docker rmi bearstech/node:lts
 	docker rmi bearstech/node-dev:6
-	docker rmi bearstech/node-dev:lts
 	docker rmi bearstech/node:8
 	docker rmi bearstech/node-dev:8
 	docker rmi bearstech/node:10
 	docker rmi bearstech/node-dev:10
 	docker rmi bearstech/node:12
 	docker rmi bearstech/node-dev:12
+	docker rmi bearstech/node:lts
+	docker rmi bearstech/node-dev:lts
 
 node6:
 	 docker build \
@@ -49,7 +49,6 @@ node6:
 		--build-arg NODE_VERSION=${NODE6_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=6 \
 		-t bearstech/node:6 .
-	docker tag bearstech/node:6 bearstech/node:lts
 
 node8:
 	 docker build \
@@ -64,6 +63,7 @@ node10:
 		--build-arg NODE_VERSION=${NODE10_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=10 \
 		-t bearstech/node:10 .
+	docker tag bearstech/node:10 bearstech/node:lts
 
 node12:
 	 docker build \
@@ -80,7 +80,6 @@ node6-dev:
 		--build-arg NODE_MAJOR_VERSION=6 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
 		-f Dockerfile.dev .
-	docker tag bearstech/node-dev:6 bearstech/node-dev:lts
 
 node8-dev:
 	 docker build \
@@ -99,6 +98,7 @@ node10-dev:
 		--build-arg NODE_MAJOR_VERSION=10 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
 		-f Dockerfile.dev .
+	docker tag bearstech/node-dev:10 bearstech/node-dev:lts
 
 node12-dev:
 	 docker build \
