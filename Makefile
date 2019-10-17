@@ -1,4 +1,5 @@
 
+include Makefile.lint
 include Makefile.build_args
 
 NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
