@@ -7,6 +7,7 @@ LABEL com.bearstech.version.node=${NODE_VERSION}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN set -eux \
+    &&  export http_proxy=${HTTP_PROXY} \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
               apt-transport-https \
