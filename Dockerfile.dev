@@ -15,10 +15,10 @@ RUN set -eux \
               apt-transport-https \
               ca-certificates \
               curl \
-    &&  curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -a \
+    &&  curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor > /etc/apt/trusted.gpg.d/nodesource.gpg \
     &&  echo "deb https://deb.nodesource.com/node_${NODE_MAJOR_VERSION}.x stretch main" > /etc/apt/sources.list.d/nodesource.list \
     &&  echo "deb-src https://deb.nodesource.com/node_${NODE_MAJOR_VERSION}.x stretch main" >> /etc/apt/sources.list.d/nodesource.list \
-    &&  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    &&  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg |  | gpg --dearmor > /etc/apt/trusted.gpg.d/yarnpkg.gpg \
     &&  echo 'deb https://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
