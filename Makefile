@@ -65,7 +65,6 @@ node10:
 		--build-arg NODE_VERSION=${NODE10_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=10 \
 		-t bearstech/node:10 .
-	docker tag bearstech/node:10 bearstech/node:lts
 
 node12:
 	 docker build \
@@ -80,6 +79,7 @@ node14:
 		--build-arg NODE_VERSION=${NODE14_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=14 \
 		-t bearstech/node:14 .
+	docker tag bearstech/node:10 bearstech/node:lts
 
 node6-dev:
 	 docker build \
@@ -107,7 +107,6 @@ node10-dev:
 		--build-arg NODE_MAJOR_VERSION=10 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
 		-f Dockerfile.dev .
-	docker tag bearstech/node-dev:10 bearstech/node-dev:lts
 
 node12-dev:
 	 docker build \
@@ -126,6 +125,7 @@ node14-dev:
 		--build-arg NODE_MAJOR_VERSION=14 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
 		-f Dockerfile.dev .
+	docker tag bearstech/node-dev:14 bearstech/node-dev:lts
 
 
 bin/goss:
