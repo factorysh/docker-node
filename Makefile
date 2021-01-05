@@ -19,7 +19,8 @@ build: \
 			node6 node6-dev \
 			node8 node8-dev \
 			node10 node10-dev \
-			node12 node12-dev
+			node12 node12-dev \
+			node14 node14-dev
 
 push:
 	docker push bearstech/node:6
@@ -30,6 +31,8 @@ push:
 	docker push bearstech/node-dev:10
 	docker push bearstech/node:12
 	docker push bearstech/node-dev:12
+	docker push bearstech/node:14
+	docker push bearstech/node-dev:14
 	docker push bearstech/node:lts
 	docker push bearstech/node-dev:lts
 
@@ -42,6 +45,8 @@ remove_image:
 	docker rmi bearstech/node-dev:10
 	docker rmi bearstech/node:12
 	docker rmi bearstech/node-dev:12
+	docker rmi bearstech/node:14
+	docker rmi bearstech/node-dev:14
 	docker rmi bearstech/node:lts
 	docker rmi bearstech/node-dev:lts
 
