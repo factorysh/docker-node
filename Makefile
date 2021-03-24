@@ -4,8 +4,6 @@ include Makefile.build_args
 
 DEBIAN_VERSION = buster
 
-NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
-NODE8_VERSION = $(shell curl -qs https://deb.nodesource.com/node_8.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE10_VERSION = $(shell curl -qs https://deb.nodesource.com/node_10.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE12_VERSION = $(shell curl -qs https://deb.nodesource.com/node_12.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE14_VERSION = $(shell curl -qs https://deb.nodesource.com/node_14.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
