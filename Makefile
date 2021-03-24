@@ -2,6 +2,8 @@
 include Makefile.lint
 include Makefile.build_args
 
+DEBIAN_VERSION = buster
+
 NODE6_VERSION = $(shell curl -qs https://deb.nodesource.com/node_6.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE8_VERSION = $(shell curl -qs https://deb.nodesource.com/node_8.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
 NODE10_VERSION = $(shell curl -qs https://deb.nodesource.com/node_10.x/dists/stretch/main/binary-amd64/Packages | grep -m 1 Version: | cut -d " " -f 2 -)
@@ -14,6 +16,7 @@ all: | pull build tests
 
 pull:
 	docker pull bearstech/debian:stretch
+	docker pull bearstech/debian:buster
 
 build: \
 			node6 node6-dev \
@@ -53,6 +56,7 @@ remove_image:
 node6:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
 		--build-arg NODE_VERSION=${NODE6_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=6 \
 		-t bearstech/node:6 .
@@ -60,6 +64,7 @@ node6:
 node8:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
 		--build-arg NODE_VERSION=${NODE8_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=8 \
 		-t bearstech/node:8 .
@@ -67,6 +72,7 @@ node8:
 node10:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
 		--build-arg NODE_VERSION=${NODE10_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=10 \
 		-t bearstech/node:10 .
@@ -74,6 +80,7 @@ node10:
 node12:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
 		--build-arg NODE_VERSION=${NODE12_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=12 \
 		-t bearstech/node:12 .
@@ -81,54 +88,60 @@ node12:
 node14:
 	docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg DEBIAN_VERSION=buster \
 		--build-arg NODE_VERSION=${NODE14_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=14 \
 		-t bearstech/node:14 .
-	docker tag bearstech/node:10 bearstech/node:lts
+	docker tag bearstech/node:14 bearstech/node:lts
 
 node6-dev:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
-		-t bearstech/node-dev:6 \
+		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
 		--build-arg NODE_VERSION=${NODE6_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=6 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
+		-t bearstech/node-dev:6 \
 		-f Dockerfile.dev .
 
 node8-dev:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
-		-t bearstech/node-dev:8 \
+		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
 		--build-arg NODE_VERSION=${NODE8_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=8 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
+		-t bearstech/node-dev:8 \
 		-f Dockerfile.dev .
 
 node10-dev:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
-		-t bearstech/node-dev:10 \
+		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
 		--build-arg NODE_VERSION=${NODE10_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=10 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
+		-t bearstech/node-dev:10 \
 		-f Dockerfile.dev .
 
 node12-dev:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
-		-t bearstech/node-dev:12 \
+		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
 		--build-arg NODE_VERSION=${NODE12_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=12 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
+		-t bearstech/node-dev:12 \
 		-f Dockerfile.dev .
 
 node14-dev:
 	docker build \
 		$(DOCKER_BUILD_ARGS) \
-		-t bearstech/node-dev:14 \
+		--build-arg DEBIAN_VERSION=buster \
 		--build-arg NODE_VERSION=${NODE14_VERSION} \
 		--build-arg NODE_MAJOR_VERSION=14 \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
+		-t bearstech/node-dev:14 \
 		-f Dockerfile.dev .
 	docker tag bearstech/node-dev:14 bearstech/node-dev:lts
 
