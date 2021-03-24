@@ -1,5 +1,7 @@
-FROM bearstech/debian:stretch
+ARG DEBIAN_VERSION
+FROM bearstech/debian:${DEBIAN_VERSION}
 
+ARG DEBIAN_VERSION
 ARG NODE_VERSION
 ARG NODE_MAJOR_VERSION
 
@@ -13,8 +15,9 @@ RUN set -eux \
               apt-transport-https \
               ca-certificates \
               curl \
+              gpg \
     &&  curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor > /etc/apt/trusted.gpg.d/nodesource.gpg \
-    &&  echo "deb https://deb.nodesource.com/node_${NODE_MAJOR_VERSION}.x stretch main" > /etc/apt/sources.list.d/nodesource.list \
+    &&  echo "deb https://deb.nodesource.com/node_${NODE_MAJOR_VERSION}.x ${DEBIAN_VERSION} main" > /etc/apt/sources.list.d/nodesource.list \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
               nodejs \
