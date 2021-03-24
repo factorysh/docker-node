@@ -29,7 +29,7 @@ RUN set -eux \
                 node-gyp \
                 yarn \
                 python3 \
-    && which npm || apt-get install -y --no-install-recommends \
+    && [ -x /usr/bin/npm ] || apt-get install -y --no-install-recommends \
                 npm \
     &&  apt-get clean \
     &&  rm -rf /var/lib/apt/lists/*
