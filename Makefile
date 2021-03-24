@@ -15,21 +15,14 @@ GOSS_VERSION := 0.3.6
 all: | pull build tests
 
 pull:
-	docker pull bearstech/debian:stretch
-	docker pull bearstech/debian:buster
+	docker pull bearstech/debian:$(DEBIAN_VERSION)
 
 build: \
-			node6 node6-dev \
-			node8 node8-dev \
 			node10 node10-dev \
 			node12 node12-dev \
 			node14 node14-dev
 
 push:
-	docker push bearstech/node:6
-	docker push bearstech/node-dev:6
-	docker push bearstech/node:8
-	docker push bearstech/node-dev:8
 	docker push bearstech/node:10
 	docker push bearstech/node-dev:10
 	docker push bearstech/node:12
@@ -40,10 +33,6 @@ push:
 	docker push bearstech/node-dev:lts
 
 remove_image:
-	docker rmi bearstech/node:6
-	docker rmi bearstech/node-dev:6
-	docker rmi bearstech/node:8
-	docker rmi bearstech/node-dev:8
 	docker rmi bearstech/node:10
 	docker rmi bearstech/node-dev:10
 	docker rmi bearstech/node:12
@@ -52,22 +41,6 @@ remove_image:
 	docker rmi bearstech/node-dev:14
 	docker rmi bearstech/node:lts
 	docker rmi bearstech/node-dev:lts
-
-node6:
-	 docker build \
-		$(DOCKER_BUILD_ARGS) \
-		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
-		--build-arg NODE_VERSION=${NODE6_VERSION} \
-		--build-arg NODE_MAJOR_VERSION=6 \
-		-t bearstech/node:6 .
-
-node8:
-	 docker build \
-		$(DOCKER_BUILD_ARGS) \
-		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
-		--build-arg NODE_VERSION=${NODE8_VERSION} \
-		--build-arg NODE_MAJOR_VERSION=8 \
-		-t bearstech/node:8 .
 
 node10:
 	 docker build \
@@ -93,26 +66,6 @@ node14:
 		--build-arg NODE_MAJOR_VERSION=14 \
 		-t bearstech/node:14 .
 	docker tag bearstech/node:14 bearstech/node:lts
-
-node6-dev:
-	 docker build \
-		$(DOCKER_BUILD_ARGS) \
-		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
-		--build-arg NODE_VERSION=${NODE6_VERSION} \
-		--build-arg NODE_MAJOR_VERSION=6 \
-		--build-arg YARN_VERSION=${YARN_VERSION} \
-		-t bearstech/node-dev:6 \
-		-f Dockerfile.dev .
-
-node8-dev:
-	 docker build \
-		$(DOCKER_BUILD_ARGS) \
-		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
-		--build-arg NODE_VERSION=${NODE8_VERSION} \
-		--build-arg NODE_MAJOR_VERSION=8 \
-		--build-arg YARN_VERSION=${YARN_VERSION} \
-		-t bearstech/node-dev:8 \
-		-f Dockerfile.dev .
 
 node10-dev:
 	 docker build \
@@ -167,34 +120,6 @@ test-deployed:
 	@docker stop ${NAME_CONTAINER} > /dev/null
 	@docker rm ${NAME_CONTAINER} > /dev/null
 
-test-6: bin/goss
-	make -s -C . test-deployed \
-			NAME_CONTAINER="$@" \
-			IMG_CONTAINER="bearstech/node-dev:6" \
-			CMD_CONTAINER="goss -g node-dev.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation"
-	make -s -C . test-deployed \
-			NAME_CONTAINER="$@" \
-			IMG_CONTAINER="bearstech/node-dev:6" \
-			CMD_CONTAINER="goss -g node-dev-npm.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation"
-	make -s -C . test-deployed \
-			NAME_CONTAINER="$@" \
-			IMG_CONTAINER="bearstech/node-dev:6" \
-			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/6.yaml validate --max-concurrent 4 --format documentation"
-
-test-8: bin/goss
-	make -s -C . test-deployed \
-			NAME_CONTAINER="$@" \
-			IMG_CONTAINER="bearstech/node-dev:8" \
-			CMD_CONTAINER="goss -g node-dev.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
-	make -s -C . test-deployed \
-			NAME_CONTAINER="$@" \
-			IMG_CONTAINER="bearstech/node-dev:8" \
-			CMD_CONTAINER="goss -g node-dev-npm.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
-	make -s -C . test-deployed \
-			NAME_CONTAINER="$@" \
-			IMG_CONTAINER="bearstech/node-dev:8" \
-			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/8.yaml validate --max-concurrent 4 --format documentation"
-
 test-10: bin/goss
 	make -s -C . test-deployed \
 			NAME_CONTAINER="$@" \
@@ -239,4 +164,4 @@ test-14: bin/goss
 
 down:
 
-tests: test-6 test-8 test-10 test-12 test-14
+tests: test-10 test-12 test-14
