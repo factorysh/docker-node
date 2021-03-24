@@ -24,11 +24,13 @@ RUN set -eux \
     &&  echo 'deb https://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
+                libnode-dev \
                 nodejs \
-                npm \
                 node-gyp \
                 yarn \
-                python \
+                python3 \
+    && which npm || apt-get install -y --no-install-recommends \
+                npm \
     &&  apt-get clean \
     &&  rm -rf /var/lib/apt/lists/*
 
