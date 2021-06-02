@@ -1,4 +1,4 @@
 ---
 
 node_version: "16"
-npm_version: "7\\.11\\..*"
+npm_version: "7\\.13\\..*"
