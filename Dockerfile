@@ -8,6 +8,9 @@ ARG NODE_MAJOR_VERSION
 LABEL com.bearstech.version.node=${NODE_VERSION}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+ENV npm_config_update_notifier=false
+
 RUN set -eux \
     &&  if [ -n "${HTTP_PROXY:-}" ]; then export http_proxy=${HTTP_PROXY}; fi \
     &&  apt-get update \
