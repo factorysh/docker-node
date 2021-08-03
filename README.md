@@ -20,3 +20,10 @@ Usage
 docker run --rm bearstech/node:lts
 docker run --rm bearstech/node-dev:lts
 ```
+
+Yarn
+----
+
+[Yarn cache](https://classic.yarnpkg.com/en/docs/cli/cache/) serve as a local global cache package for the entire system.
+
+Default cache directory is set to `/usr/local/share/.cache/yarn`

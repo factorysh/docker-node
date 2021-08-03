@@ -40,6 +40,12 @@ RUN set -eux \
 
 SHELL ["/bin/sh", "-c"]
 
+# yarn cache config, same dir for all users
+ENV YARN_CACHE_FOLDER=/usr/local/share/.cache/yarn
+# ensure rw for eveyone (needed for default users added in later builds using this as base image)
+RUN mkdir -p /usr/local/share/.cache/yarn \
+    && chmod 777 /usr/local/share/.cache/yarn
+
 # generated labels
 
 ARG GIT_VERSION
