@@ -32,29 +32,16 @@ build: variables build10 build12 build14 build16
 	docker tag bearstech/node:14 bearstech/node:lts
 	docker tag bearstech/node-dev:14 bearstech/node-dev:lts
 
-push:
-	docker push bearstech/node:10
-	docker push bearstech/node-dev:10
-	docker push bearstech/node:12
-	docker push bearstech/node-dev:12
-	docker push bearstech/node:14
-	docker push bearstech/node-dev:14
-	docker push bearstech/node:16
-	docker push bearstech/node-dev:16
-	docker push bearstech/node:lts
-	docker push bearstech/node-dev:lts
+push-%:
+	$(eval version=$(shell echo $@ | cut -d- -f2))
+	docker push bearstech/node:$(version)
+	docker push bearstech/node-dev:$(version)
+
+push: push-10 push-12 push-14 push-16 push-lts
 
 remove_image:
-	docker rmi bearstech/node:10
-	docker rmi bearstech/node-dev:10
-	docker rmi bearstech/node:12
-	docker rmi bearstech/node-dev:12
-	docker rmi bearstech/node:14
-	docker rmi bearstech/node-dev:14
-	docker rmi bearstech/node:16
-	docker rmi bearstech/node-dev:16
-	docker rmi bearstech/node:lts
-	docker rmi bearstech/node-dev:lts
+	docker rmi -f $(shell docker images -q --filter="reference=bearstech/node-dev") || true
+	docker rmi -f $(shell docker images -q --filter="reference=bearstech/node") || true
 
 node-%:
 	$(eval version=$(shell echo $@ | cut -d- -f2-))
