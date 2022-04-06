@@ -62,7 +62,7 @@ node_dev-%:
 		--build-arg NODE_VERSION=$(version) \
 		--build-arg NODE_MAJOR_VERSION=$(major_version) \
 		--build-arg YARN_VERSION=${YARN_VERSION} \
-		-t bearstech/node-dev:10 \
+		-t bearstech/node-dev:$(major_version) \
 		-f Dockerfile.dev .
 
 bin/goss:
