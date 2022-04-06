@@ -23,11 +23,12 @@ variables:
 pull:
 	docker pull bearstech/debian:$(DEBIAN_VERSION)
 
-build: variables \
-		node-$(NODE10_VERSION) node_dev-$(NODE10_VERSION) \
-		node-$(NODE12_VERSION) node_dev-$(NODE12_VERSION) \
-		node-$(NODE14_VERSION) node_dev-$(NODE14_VERSION) \
-		node-$(NODE16_VERSION) node_dev-$(NODE16_VERSION)
+build10: node-$(NODE10_VERSION) node_dev-$(NODE10_VERSION)
+build12: node-$(NODE12_VERSION) node_dev-$(NODE12_VERSION)
+build14: node-$(NODE14_VERSION) node_dev-$(NODE14_VERSION)
+build16: node-$(NODE16_VERSION) node_dev-$(NODE16_VERSION)
+
+build: variables build10 build12 build14 build14
 	docker tag bearstech/node:14 bearstech/node:lts
 	docker tag bearstech/node-dev:14 bearstech/node-dev:lts
 
