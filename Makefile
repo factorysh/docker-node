@@ -46,7 +46,7 @@ remove_image:
 node-%:
 	$(eval version=$(shell echo $@ | cut -d- -f2-))
 	$(eval major_version=$(shell echo $(version) | cut -d. -f1))
-	 docker build \
+	docker build \
 		$(DOCKER_BUILD_ARGS) \
 		--build-arg DEBIAN_VERSION=$(DEBIAN_VERSION) \
 		--build-arg NODE_VERSION=$(version) \
