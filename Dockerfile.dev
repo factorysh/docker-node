@@ -28,7 +28,7 @@ RUN set -eux \
     &&  echo 'deb https://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
-                nodejs \
+                nodejs=${NODE_VERSION} \
                 yarn \
                 python3 \
     &&  [ -x /usr/bin/npm ] || apt-get install -y --no-install-recommends \

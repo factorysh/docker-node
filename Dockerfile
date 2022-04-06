@@ -23,7 +23,7 @@ RUN set -eux \
     &&  echo "deb https://deb.nodesource.com/node_${NODE_MAJOR_VERSION}.x ${DEBIAN_VERSION} main" > /etc/apt/sources.list.d/nodesource.list \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
-              nodejs \
+              nodejs=${NODE_VERSION} \
     &&  apt-get clean \
     &&  rm -rf /var/lib/apt/lists/*
 

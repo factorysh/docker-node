@@ -14,11 +14,11 @@ GOSS_VERSION := 0.3.16
 all: | pull build tests
 
 variables:
-	echo NODE10_VERSION: $(NODE10_VERSION)
-	echo NODE12_VERSION: $(NODE12_VERSION)
-	echo NODE14_VERSION: $(NODE14_VERSION)
-	echo NODE16_VERSION: $(NODE16_VERSION)
-	echo YARN_VERSION: $(YARN_VERSION)
+	@echo NODE10_VERSION: $(NODE10_VERSION)
+	@echo NODE12_VERSION: $(NODE12_VERSION)
+	@echo NODE14_VERSION: $(NODE14_VERSION)
+	@echo NODE16_VERSION: $(NODE16_VERSION)
+	@echo YARN_VERSION: $(YARN_VERSION)
 
 pull:
 	docker pull bearstech/debian:$(DEBIAN_VERSION)
@@ -28,16 +28,16 @@ build12: node-$(NODE12_VERSION) node_dev-$(NODE12_VERSION)
 build14: node-$(NODE14_VERSION) node_dev-$(NODE14_VERSION)
 build16: node-$(NODE16_VERSION) node_dev-$(NODE16_VERSION)
 
-build: variables build10 build12 build14 build16
-	docker tag bearstech/node:14 bearstech/node:lts
-	docker tag bearstech/node-dev:14 bearstech/node-dev:lts
+build: variables build12 build14 build16
+	docker tag bearstech/node:16 bearstech/node:lts
+	docker tag bearstech/node-dev:16 bearstech/node-dev:lts
 
 push-%:
 	$(eval version=$(shell echo $@ | cut -d- -f2))
 	docker push bearstech/node:$(version)
 	docker push bearstech/node-dev:$(version)
 
-push: push-10 push-12 push-14 push-16 push-lts
+push: push-12 push-14 push-16 push-lts
 
 remove_image:
 	docker rmi -f $(shell docker images -q --filter="reference=bearstech/node-dev") || true
@@ -103,4 +103,4 @@ test-%: bin/goss
 
 down:
 
-tests: test-10 test-12 test-14 test-16
+tests: test-12 test-14 test-16
