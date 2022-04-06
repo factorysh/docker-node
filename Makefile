@@ -70,36 +70,20 @@ bin/goss:
 	curl -o bin/goss -L https://github.com/aelsabbahy/goss/releases/download/v${GOSS_VERSION}/goss-linux-amd64
 	chmod +x bin/goss
 
-NAME_CONTAINER := ""
-CMD_CONTAINER := ""
-IMG_CONTAINER := ""
-
-test-deployed:
-	@test "${NAME_CONTAINER}" || (echo "you cannot call this rule..." && exit 1)
-	@test "${CMD_CONTAINER}" || (echo "you cannot call this rule..." && exit 1)
-	@test "${IMG_CONTAINER}" || (echo "you cannot call this rule..." && exit 1)
-	@(docker stop ${NAME_CONTAINER} > /dev/null 2>&1 && docker rm ${NAME_CONTAINER} > /dev/null 2>&1) || true
-	@docker run -d -t --name ${NAME_CONTAINER} ${IMG_CONTAINER} > /dev/null
-	@docker cp tests_node/. ${NAME_CONTAINER}:/goss
-	@docker cp bin/goss ${NAME_CONTAINER}:/usr/local/bin/goss
-	@docker exec -t -w /goss ${NAME_CONTAINER} ${CMD_CONTAINER}
-	@docker stop ${NAME_CONTAINER} > /dev/null
-	@docker rm ${NAME_CONTAINER} > /dev/null
-
 test-%: bin/goss
 	$(eval version=$(shell echo $@ | cut -d- -f2))
-	make -s -C . test-deployed \
-			NAME_CONTAINER="$@" \
-			IMG_CONTAINER="bearstech/node-dev:$(version)" \
-			CMD_CONTAINER="goss -g node-dev.yaml --vars vars/$(version).yaml validate --max-concurrent 4 --format documentation"
-	make -s -C . test-deployed \
-			NAME_CONTAINER="$@" \
-			IMG_CONTAINER="bearstech/node-dev:$(version)" \
-			CMD_CONTAINER="goss -g node-dev-npm.yaml --vars vars/$(version).yaml validate --max-concurrent 4 --format documentation"
-	make -s -C . test-deployed \
-			NAME_CONTAINER="$@" \
-			IMG_CONTAINER="bearstech/node-dev:$(version)" \
-			CMD_CONTAINER="goss -g node-dev-yarn.yaml --vars vars/$(version).yaml validate --max-concurrent 4 --format documentation"
+	mkdir -p build
+	for filename in node-dev.yaml node-dev-npm.yaml node-dev-yarn.yaml; do \
+		echo $$filename $(version); \
+		cp -r tests_node/ build/$(version); \
+		docker run --rm -t \
+			-v`pwd`/bin/goss:/usr/local/bin/goss \
+			-v`pwd`/build/$(version):/goss \
+			-w /goss \
+			bearstech/node-dev:$(version) \
+			goss -g $$filename --vars vars/$(version).yaml \
+				validate --max-concurrent 4 --format documentation; \
+	done
 
 down:
 
